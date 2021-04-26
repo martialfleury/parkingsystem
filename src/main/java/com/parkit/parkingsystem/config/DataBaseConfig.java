@@ -1,21 +1,39 @@
 package com.parkit.parkingsystem.config;
 
+import jdk.jfr.Percentage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.*;
+/**
+ *
+ *Class to open and close connection.
+ * @author Fleury
+ *
+ */
 
 public class DataBaseConfig {
 
     private static final Logger logger = LogManager.getLogger("DataBaseConfig");
 
+    /**
+     *
+     * Method to open MySQL DB connection.
+      * @return connexion in DataBase
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         logger.info("Create DB connection");
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/prod","root","rootroot");
+                "jdbc:mysql://localhost:3306/prod","root","");
     }
 
+    /**
+     * Method to close database connection
+     * @param con as Connection instance to be closed
+     */
     public void closeConnection(Connection con){
         if(con!=null){
             try {
@@ -27,6 +45,10 @@ public class DataBaseConfig {
         }
     }
 
+    /**
+     * Method to close preparedStatement.
+     * @param ps an instance of PreparedStatement to be closed
+     */
     public void closePreparedStatement(PreparedStatement ps) {
         if(ps!=null){
             try {
@@ -38,6 +60,10 @@ public class DataBaseConfig {
         }
     }
 
+    /**
+     * Method to close the resultSet.
+     * @param rs an instance of ResultSet to be closed
+     */
     public void closeResultSet(ResultSet rs) {
         if(rs!=null){
             try {

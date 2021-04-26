@@ -2,14 +2,20 @@ package com.parkit.parkingsystem.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Scanner;
 
+/**
+ * Class to capture the the user entry
+ */
 public class InputReaderUtil {
 
     private static Scanner scan = new Scanner(System.in);
     private static final Logger logger = LogManager.getLogger("InputReaderUtil");
 
+    /**
+     *  Method to read the selection menu
+     * @return input the number from user or -1 if it doesn't read the entry
+     */
     public int readSelection() {
         try {
             int input = Integer.parseInt(scan.nextLine());
@@ -21,6 +27,11 @@ public class InputReaderUtil {
         }
     }
 
+    /**
+     *  Method to capture the vehicle registration number
+     * @return vehicleRegNumber
+     * @throws Exception
+     */
     public String readVehicleRegistrationNumber() throws Exception {
         try {
             String vehicleRegNumber= scan.nextLine();

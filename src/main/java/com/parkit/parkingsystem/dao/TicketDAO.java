@@ -13,12 +13,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+/**
+ * Class to save, to get, to update and to check a ticket in DB.
+ */
+
 public class TicketDAO {
 
     private static final Logger logger = LogManager.getLogger("TicketDAO");
-
     public DataBaseConfig dataBaseConfig = new DataBaseConfig();
 
+    /**
+     * Method to save a ticket in DB.
+     * @param ticket
+     * @return boolean true (ps.execute()) or false it doesn't save the ticket
+     */
     public boolean saveTicket(Ticket ticket){
         Connection con = null;
         try {
@@ -40,6 +48,11 @@ public class TicketDAO {
         }
     }
 
+    /**
+     * Method to get a ticket from DB.
+     * @param vehicleRegNumber
+     * @return ticket that is in the database
+     */
     public Ticket getTicket(String vehicleRegNumber) {
         Connection con = null;
         Ticket ticket = null;
@@ -69,6 +82,11 @@ public class TicketDAO {
         }
     }
 
+    /**
+     *  Method to update a ticket in DB
+     * @param ticket
+     * @return boolean true (ps.execute()) or false if "id" doesn't update the ticket in DB
+     */
     public boolean updateTicket(Ticket ticket) {
         Connection con = null;
         try {
@@ -86,4 +104,38 @@ public class TicketDAO {
         }
         return false;
     }
-}
+
+    /**
+     *  Method for checking that the vehicle is already a customer.
+     * @param vehicleRegNumber
+     * @return  recurring
+     */
+    public boolean isAlreadyClient(String vehicleRegNumber) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean recurring = false;
+        int count = 0;
+
+        try {
+            con = dataBaseConfig.getConnection();
+            ps = con.prepareStatement(DBConstants.COUNT_TICKET);
+            ps.setString(1, vehicleRegNumber);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                count = rs.getInt(1);
+                logger.info(count);
+            }
+            if (count >= 1) {
+                recurring = true;
+            }
+        } catch (Exception ex) {
+            logger.error("Error to verify if it's a recurring user", ex);
+        } finally {
+            dataBaseConfig.closeResultSet(rs);
+            dataBaseConfig.closePreparedStatement(ps);
+            dataBaseConfig.closeConnection(con);
+        }
+        return recurring;
+    }
+    }
