@@ -209,7 +209,7 @@ public class FareCalculatorServiceTest {
     }
 
     /**
-     * est service
+     * Test service
      *  * Calculate fare for free less 30 minutes for UnkownType
      */
     @Test

@@ -1,7 +1,7 @@
 package com.parkit.parkingsystem.constants;
 
 /**
- * Class to contain constants to fare the price by hour forbike and the car.
+ * Class to contain constants to fare the price by hour for bike and the car.
  */
 
 public class Fare {

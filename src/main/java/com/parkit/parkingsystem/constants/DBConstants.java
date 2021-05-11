@@ -26,9 +26,17 @@ public class DBConstants {
      */
     public static final String GET_TICKET = "select t.PARKING_NUMBER, t.ID, t.PRICE, t.IN_TIME, t.OUT_TIME, p.TYPE from ticket t,parking p where p.parking_number = t.parking_number and t.VEHICLE_REG_NUMBER=? order by t.IN_TIME  limit 1";
     /**
-     * here,the query is used to count the recurrence of a vehicle
+     * check incoming vehicle registration number.
+     * and check the vehicles that are using the parking recurrent
      */
-    public static final String COUNT_TICKET = "SELECT count(*) FROM test.ticket WHERE VEHICLE_REG_NUMBER=?";
+    public static final String PARKING_RECURRENCE = "select count(ID) from ticket where VEHICLE_REG_NUMBER=?";
+    /**
+     * here , the query is used for to find out the available parking spot
+     */
+    public static final String GET_PARKING_SPOT = "select PARKING_NUMBER, TYPE, AVAILABLE from parking where PARKING_NUMBER = ?";
+
+
+
 
 }
 
